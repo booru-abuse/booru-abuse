@@ -46,12 +46,4 @@ export class Client {
 
         return this;
     }
-
-    /**
-     * Returns autocomplete suggestions for a given search.
-     * @param query Full search, the last tag of which to get results from.
-     */
-    async autocomplete(query: string): Promise<AutocompleteTags> {
-        return await AutocompleteTags.fromQuery(query);
-    }
 }

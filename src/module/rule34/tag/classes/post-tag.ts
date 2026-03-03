@@ -1,10 +1,15 @@
 import { TagType } from "../enums/tag-type.ts";
+import { overlayKeys } from "../../../../util/misc/functions/overlay-keys.ts";
 import type { BaseTag } from "../interfaces/base-tag.ts";
 import type { RawPostJSON } from "../../api/raw/interface/raw-posts-json.ts";
 
 /** A tag attributed to  a post. */
 export class PostTag<T extends TagType = TagType>
 implements Pick<BaseTag<T>, "name" | "count" | "type"> {
+    name: string;
+    count: number;
+    type: T;
+    
     static RAW_TAG_TYPE = {
         "copyright": "Copyright",
         "character": "Character",
@@ -18,15 +23,18 @@ implements Pick<BaseTag<T>, "name" | "count" | "type"> {
             null
         > | "null"]:
             keyof typeof TagType;
-    }
+    };
     
-    name: string;
-    count: number;
-    type: T;
+    constructor (object: {
+        name: string;
+        count: number;
+        type: T;
+    }) {
+        overlayKeys(this, object);
+    }
 
-    //#region constructor
     static fromRaw(raw: RawPostJSON<true>["tag_info"][number]) {
-        return PostTag.fromObject({
+        return new this({
             name: raw.tag,
             count: raw.count,
             type: TagType[this.RAW_TAG_TYPE[
@@ -35,23 +43,4 @@ implements Pick<BaseTag<T>, "name" | "count" | "type"> {
             // ERROR
         });
     }
-
-    static fromObject(object: {
-        name: string;
-        count: number;
-        type: TagType;
-    }) {
-        return new PostTag(object);
-    }
-
-    constructor (object: {
-        name: string;
-        count: number;
-        type: T;
-    }) {
-        this.name = object.name;
-        this.count = object.count;
-        this.type = object.type;
-    }
-    //#endregion
 }

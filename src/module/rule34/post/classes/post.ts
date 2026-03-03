@@ -10,21 +10,6 @@ import type { Client } from "../../client/classes/client.ts";
 
 /** A post. */
 export class Post {
-    static RAW_RATING = {
-        "safe": "Safe",
-        "questionable": "Questionable",
-        "explicit": "Explicit"
-    } satisfies {
-        [K in RawPostJSON["rating"]]: keyof typeof PostRating;
-    };
-    static RAW_STATUS = {
-        "active": "Active",
-        "flagged": "Flagged",
-        "deleted": "Deleted"
-    } satisfies {
-        [K in RawPostJSON["status"]]: keyof typeof PostStatus;
-    }
-
     protected client: Client;
     protected hasChildren: boolean;
     protected commentCount: boolean;
@@ -43,12 +28,46 @@ export class Post {
 
     score: number;
     tags: PostTags;
+    
+    static RAW_RATING = {
+        "safe": "Safe",
+        "questionable": "Questionable",
+        "explicit": "Explicit"
+    } satisfies {
+        [K in RawPostJSON["rating"]]: keyof typeof PostRating;
+    };
+    static RAW_STATUS = {
+        "active": "Active",
+        "flagged": "Flagged",
+        "deleted": "Deleted"
+    } satisfies {
+        [K in RawPostJSON["status"]]: keyof typeof PostStatus;
+    };
+
+    constructor (object: {
+        client: Client;
+        hasChildren: boolean;
+        commentCount: number;
+        file: PostFiles;
+        id: number;
+        parent: number | null;
+        source: string;
+        rating: PostRating;
+        author: PostAuthor;
+        created: Date;
+        modified: Date;
+        status: PostStatus;
+        score: number;
+        tags: PostTags;
+    }) {
+        overlayKeys(this, object);
+    }
 
     static fromRaw(
         client: Client,
         { json, xml: { attr: xml } }: { json: RawPostJSON<true>; xml: RawPostXML; }
     ) {
-        return new Post({
+        return new this({
             client: client,
             hasChildren: xml.has_children === "true",
             commentCount: json.comment_count,
@@ -76,24 +95,5 @@ export class Post {
             score: json.score,
             tags: PostTags.fromRaw(json)
         });
-    }
-
-    constructor (object: {
-        client: Client;
-        hasChildren: boolean;
-        commentCount: number;
-        file: PostFiles;
-        id: number;
-        parent: number | null;
-        source: string;
-        rating: PostRating;
-        author: PostAuthor;
-        created: Date;
-        modified: Date;
-        status: PostStatus;
-        score: number;
-        tags: PostTags;
-    }) {
-        overlayKeys(this, object);
     }
 }

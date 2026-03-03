@@ -1,4 +1,5 @@
 import { BaseUser } from "../../misc/interfaces/base-user.ts";
+import { overlayKeys } from "../../../../util/misc/functions/overlay-keys.ts";
 
 /** The creator of a post. */
 export class PostAuthor extends BaseUser {
@@ -8,16 +9,9 @@ export class PostAuthor extends BaseUser {
     /** Whether the user is a bot. */
     bot: boolean;
 
-    //#region constructor
-    static fromObject(object: { name: string; id: number; }) {
-        return new PostAuthor(object);
-    }
-
-    constructor (option: { name: string; id: number; }) {
+    constructor (object: { name: string; id: number; }) {
         super();
-        this.name = option.name;
-        this.id = option.id;
+        overlayKeys(this, object);
         this.bot = this.name === "bot";
     }
-    //#endregion
 }

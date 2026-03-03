@@ -11,32 +11,16 @@ export class AutocompleteTags {
     incompleteTag: string | null;
     /** Resulting autocomplete suggestions. */
     tags: AutocompleteTag[];
-
-    //#region constructor
-    static async fromQuery(query: string): Promise<
-        ReturnType<typeof this.fromRaw>
-    > {
-        const tag = query.match(this.LAST_TAG_REGEX)?.[0];
-        if (!tag) return AutocompleteTags.fromRaw([], query);
-        const response: RawAutocompleteTags
-            = await fetchJSON(APIURL.autocomplete({ q: tag }));
-        return this.fromRaw(response, tag);
+    
+    constructor (array: AutocompleteTag[], tag: string) {
+        this.tags = array.filter(i => i.isReal());
+        this.incompleteTag = tag;
     }
 
     static fromRaw(raw: RawAutocompleteTags, tag: string): AutocompleteTags {
-        return AutocompleteTags.fromObject(
-            raw.map(AutocompleteTag.fromRaw),
+        return new this(
+            raw.map(i => AutocompleteTag.fromRaw(i)),
             tag
         );
     }
-
-    static fromObject(object: AutocompleteTag[], tag: string) {
-        return new AutocompleteTags(object, tag);
-    }
-    
-    constructor (array: AutocompleteTag[], tag: string) {
-        this.incompleteTag = tag;
-        this.tags = array.filter(i => i.isReal());
-    }
-    //#endregion
 }

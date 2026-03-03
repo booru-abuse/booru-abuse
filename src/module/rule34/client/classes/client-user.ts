@@ -1,3 +1,4 @@
+import { overlayKeys } from "../../../../util/misc/functions/overlay-keys.ts";
 import type { Authentication } from "../interfaces/authentication.ts";
 import type { BaseUser } from "../../misc/interfaces/base-user.ts";
 
@@ -5,19 +6,13 @@ import type { BaseUser } from "../../misc/interfaces/base-user.ts";
 export class ClientUser implements Pick<BaseUser, "id"> {
     id: number;
 
-    //#region constructor
+    constructor (object: { id: number; }) {
+        overlayKeys(this, object);
+    }
+
     static fromAuth(auth: Pick<Authentication, "user_id">) {
-        return ClientUser.fromObject({
+        return new this({
             id: auth.user_id
         });
     }
-
-    static fromObject(object: { id: number; }) {
-        return new ClientUser(object);
-    }
-
-    constructor (option: { id: number; }) {
-        this.id = option.id;
-    }
-    //#endregion
 }
