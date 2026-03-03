@@ -1,6 +1,6 @@
 export function overlayKeys<
-    O extends unknown,
-    N extends unknown
+    O extends Record<keyof any, any>,
+    N extends Record<keyof any, any>
 >(
     object: O,
     overlay: N
