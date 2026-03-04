@@ -70,7 +70,7 @@ export class PostFiles extends PostFile {
         this.hash = object.hash;
     }
 
-    static fromRaw({json, xml}: {
+    static fromRaw({ json, xml }: {
         json: RawPostJSON;
         xml: RawPostXML["attr"];
     }) {
