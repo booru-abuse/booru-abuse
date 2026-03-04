@@ -1,8 +1,10 @@
 import { ClientUser } from "./client-user.ts";
 import { AUTHENTICATION_RESPONSE } from "../constants/authentication-response.ts";
 import { APIURL } from "../../api/url/functions/api-url.ts";
+import { Posts } from "../../post/classes/posts.ts";
 import { AutocompleteTags } from "../../tag/classes/autocomplete-tags.ts";
 import { BooruAbuseError } from "../../../../error/classes/booru-abuse-error.ts";
+import { awaitPromisesOfObject } from "../../../../util/json/functions/await-promises-of-object.ts";
 import { fetchJSON, fetchXML } from "../../../../util/rest.ts";
 import type { Authentication } from "../interfaces/authentication.ts";
 import type { ClientOptions } from "../interfaces/client-options.ts";
@@ -12,7 +14,6 @@ import type { APIURLParameterMap } from "../../api/url/interfaces/api-parameter-
 export class Client {
     #auth: Authentication;
 
-    protected client = this;
     protected authorized: boolean = false;
     
     /** The user tied to the client. */
@@ -70,4 +71,14 @@ export class Client {
             // ERROR
         ).then(raw => AutocompleteTags.fromRaw(raw, tag));
     }
+
+    /**
+     * Returns posts resulting from a search query.
+     * @param query The search query.
+     * @param options The options to affect the returned results.
+     */
+    async search(
+        query: string,
+        options?: { perPage?: number; page?: number; }
+    ): Promise<Posts> {}
 }
