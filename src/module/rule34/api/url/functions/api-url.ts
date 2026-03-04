@@ -1,53 +1,46 @@
+import { BASE_URL } from "../constants/base-url.ts";
 import { createURL } from "../../../../../util/misc/functions/create-url.ts";
-import * as APIParameters from "../types/api-parameters.ts";
-import type { Authentication } from "../../../client/interfaces/authentication.ts";
+import type { APIURLParameterMap } from "../interfaces/api-parameter-map.ts";
 
 let getURL = (
     s: string,
-    params: NonNullable<Parameters<typeof createURL>[0]["params"]>,
-    auth: Authentication
+    params: NonNullable<Parameters<typeof createURL>[0]["params"]>
 ) => createURL({
-    base: "https://api.rule34.xxx/",
+    base: BASE_URL,
     params: {
         page: "dapi",
         q: "index",
         s: s,
-        ...params,
-        ...auth
+        ...params
     }
 });
 
-export function autocomplete(
-    params: APIParameters.Autocomplete
-): string {
-    return createURL({
-        base: "https://api.rule34.xxx/",
-        path: [ "autocomplete.php" ],
-        params: params
-    });
-}
+export function APIURL<S extends keyof APIURLParameterMap>(
+    s: S,
+    params: APIURLParameterMap[S]["params"],
+    ...args: APIURLParameterMap[S]["args"]
+): string;
+export function APIURL<S extends "post">(
+    s: S,
+    params: Omit<APIURLParameterMap[S]["params"], "json">,
+    bothFormats: true
+): { json: string; xml: string; };
 
-export function post(
-    auth: Authentication,
-    params: APIParameters.Search
-): string {
-    return getURL("post", params, auth);
-}
-
-export function postBothFormats(
-    auth: Authentication,
-    params: Omit<APIParameters.Search<true>, "json">
-): { xml: string; json: string; } {
-    // @
-    const xml: any = params;
-    xml.json = 0;
-    delete xml.fields;
-
-    const json: any = params;
-    json.json = 1;
-
-    return {
-        xml: post(auth, xml),
-        json: post(auth, json)
-    };
+export function APIURL<S extends keyof APIURLParameterMap>(
+    s: S,
+    params: APIURLParameterMap[S]["params"],
+    ...args: APIURLParameterMap[S]["args"]
+) {
+    switch (s) {
+        case "autocomplete": return createURL({
+            base: BASE_URL,
+            path: [ "autocomplete.php" ],
+            params: params
+        });
+        case "post": if (args[0]) return {
+            xml:  getURL(s, { ... params, json: 0 }),
+            json: getURL(s, { ... params, json: 1 })
+        };
+            return getURL(s, params);
+    }
 }
