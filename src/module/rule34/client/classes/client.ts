@@ -1,8 +1,7 @@
 import { ClientUser } from "./client-user.ts";
 import { AUTHENTICATION_RESPONSE } from "../constants/authentication-response.ts";
-import { AutocompleteTags } from "../../tag/classes/autocomplete-tags.ts";
 import { BooruAbuseError } from "../../../../error/classes/booru-abuse-error.ts";
-import * as APIURL from "../../api/url/functions/api-url.ts";
+import { APIURL } from "../../api/url/functions/api-url.ts";
 import type { Authentication } from "../interfaces/authentication.ts";
 import type { ClientOptions } from "../interfaces/client-options.ts";
 
@@ -18,7 +17,7 @@ export class Client {
     constructor (options: ClientOptions) {
         this.#auth = options.auth;
         this.self = ClientUser.fromAuth(options.auth);
-    }    
+    }
     
     /**
      * Returns the client if the credentials are valid, otherwise throws an
@@ -26,7 +25,8 @@ export class Client {
      */
     async test(): Promise<this | never> {
         if (!this.authorized) {
-            const response = await fetch(APIURL.post(this.#auth, {
+            const response = await fetch(APIURL("post", {
+                ...this.#auth,
                 limit: 0,
                 json: 1
             })).then(r => r.text());
