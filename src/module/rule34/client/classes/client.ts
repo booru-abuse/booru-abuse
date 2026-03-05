@@ -80,5 +80,18 @@ export class Client {
     async search(
         query: string,
         options?: { perPage?: number; page?: number; }
-    ): Promise<Posts> {}
+    ): Promise<Posts> {
+        const url = this.APIURL("post", {
+            tags: query,
+            limit: options.perPage,
+            pid: options.page
+        }, true);
+
+        return await awaitPromisesOfObject({
+            // API REQUEST
+            xml: fetchXML(url.xml),
+            // API REQUEST
+            json: fetchJSON(url.json)
+        }).then(response => Posts.fromRaw(this, query, response));
+    }
 }
