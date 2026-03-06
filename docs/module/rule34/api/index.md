@@ -52,14 +52,14 @@ objects to URLs.
 ## Server
 
 When using the API properly, you should never receive an error unless the server
-is overloaded or the search dies (needs clarification[^X.1]). When the server
+is overloaded or the search dies (needs clarification[^NC-1]). When the server
 _does_ break, you will receive a response success of "false" and a message
-stating something along the lines of "search down" (needs clarification[^X.2]).
+stating something along the lines of "search down" (needs clarification[^NC-2]).
 
 [^1]: This rule does not apply to the API's tag search autocompletion endpoint.
 
-[^X.1]: It is uncertain what circumstances may cause a search to die.
+[^NC-1]: It is uncertain what circumstances may cause a search to die.
 
-[^X.2]: It is uncertain what this response may look like. The official
+[^NC-2]: It is uncertain what this response may look like. The official
   documentation doesn't elaborate what a "response success of 'false' with a
   message" means, nor does it say explicitly what the message is.
