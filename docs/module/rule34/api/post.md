@@ -62,34 +62,29 @@ Below is a collapsed example of XML data returned from the API[^1].
 ```xml
 <posts count  = "1"
        offset = "0" >
-  <post file_url       = "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg"
-        width          = "1136"
-        height         = "1250"
-    
+  <post height         = "1250"
+        score          = "393"
+        file_url       = "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg"
+        parent_id      = ""
         sample_url     = "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg"
         sample_width   = "1136"
         sample_height  = "1250"
-    
         preview_url    = "https://api-cdn.rule34.xxx/thumbnails/5109/thumbnail_0966...81e4.jpg"
-        preview_width  = "136"
-        preview_height = "150"
-    
-        id             = "5823623"
-        creator_id     = "1550138"
-        parent_id      = ""
-        has_children   = "false"
-        has_notes      = "false"
         rating         = "q"
         tags           = "1girls 2d ... white_sclera zoologist_(terraria)"
-        source         = ""
-    
-        created_at     = "Fri Mar 18 03:02:02 +0100 2022"
+        id             = "5823623"
+        width          = "1136"
         change         = "1680758419"
         md5            = "0966b7bb5f64f30010d14d5e98bb81e4"
+        creator_id     = "1550138"
+        has_children   = "false"
+        created_at     = "Fri Mar 18 03:02:02 +0100 2022"
         status         = "active"
-    
-        score          = "393"
-        has_comments   = "true" />
+        source         = ""
+        has_notes      = "false"
+        has_comments   = "true"
+        preview_width  = "136"
+        preview_height = "150" />
 </posts>
 ```
 
@@ -112,35 +107,29 @@ Below is a collapsed example of JSON data returned from the API[^1].
 ```json
 [
   {
-    "file_url": "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg",
-    "width": 1136,
-    "height": 1250,
-
-    "sample": false,
-    "sample_url": "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg",
-    "sample_width": 0,
-    "sample_height": 0,
-
-    "preview_url": "https://api-cdn.rule34.xxx/thumbnails/5109/thumbnail_0966...81e4.jpg",
-
-    "id": 5823623,
-    "owner": "grovyleslut",
-    "parent_id": 0,
-    "has_notes": false,
-    "rating": "questionable",
-    "tags": "1girls 2d ... white_sclera zoologist_(terraria)",
-    "source": "",
-
-    "change": 1680758419,
-    "hash": "0966b7bb5f64f30010d14d5e98bb81e4",
-    "directory": 5109,
-    "image": "0966b7bb5f64f30010d14d5e98bb81e4.jpeg",
-    "status": "active",
-
-    "score": 399,
-    "comment_count": 22,
-
-    "tag_info": [
+    "preview_url"   : "https://api-cdn.rule34.xxx/thumbnails/5109/thumbnail_0966...81e4.jpg",
+    "sample_url"    : "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg",
+    "file_url"      : "https://api-cdn.rule34.xxx/images/5109/0966...81e4.jpeg",
+    "directory"     : 5109,
+    "hash"          : "0966b7bb5f64f30010d14d5e98bb81e4",
+    "width"         : 1136,
+    "height"        : 1250,
+    "id"            : 5823623,
+    "image"         : "0966b7bb5f64f30010d14d5e98bb81e4.jpeg",
+    "change"        : 1680758419,
+    "owner"         : "grovyleslut",
+    "parent_id"     : 0,
+    "rating"        : "questionable",
+    "sample"        : false,
+    "sample_width"  : 0,
+    "sample_height" : 0,
+    "score"         : 399,
+    "tags"          : "1girls 2d ... white_sclera zoologist_(terraria)",
+    "source"        : "",
+    "status"        : "active",
+    "has_notes"     : false,
+    "comment_count" : 22,
+    "tag_info"      : [
       { "count": 4616241, "type": "tag",       "tag": "1girls"               },
       { "count": 439311,  "type": "metadata",  "tag": "2d"                   },
       // ...
@@ -203,39 +192,54 @@ The XML root node has two attributes:
 
 The post objects of each format have mostly mutual properties.
 
+#### Content
+
 - **`file_url`**: The CDN URL of the main file
 - **`width`**: The width of the main file in pixels
   - Integer
 - **`height`**: The height of the main file in pixels
   - Integer
+
 - **`sample_url`**: The CDN URL of the downsampled image of the main file
 - **`sample_width`**: The width of the downsampled image in pixels
   - Integer
 - **`sample_height`**: The height of the downsampled image in pixels
   - Integer
+
 - **`preview_url`**: The CDN URL of a highly downsampled version of the main file
+
+#### Metadata
+
 - **`id`**: The unique ID of the post
   - Integer
 - **`parent_id`**: The ID of the post set as the parent
   - Integer, unless unset:
     - XML returns an empty string
     - JSON returns `0`
-- **`has_notes`**: Whether the image has notes associated
-  - Always boolean
+
 - **`rating`**: The content rating of the image
   - Possible values (for _safe,_ _questionable,_ or _explicit_ respectively) are
     represented differently between formats:
     - XML returns `"s"`, `"q"`, or `"e"`
     - JSON returns `"safe"`, `"questionable"`, or `"explicit"`
+
+- **`has_notes`**: Whether the image has notes associated
+  - Always boolean
 - **`tags`**: The list of tags on the post sorted alphabetically and separated
   by a space
 - **`source`**: The string set as the source of the post
   - Can be any or empty
+
+#### Internal
+
 - **`change`**: The Unix timestamp, in seconds, of the date the post was last
   updated
   - Integer
 - **`md5`** (XML) / **`hash`** (JSON): The MD5 hash of the post
   - Always a hexadecimal string
+
+#### Interaction
+
 - **`status`**: The visibility status of the post
   - `"active"`, `"flagged"`, or `"deleted"`
 - **`score`**: The amount of upvotes given to the post
@@ -254,6 +258,7 @@ XML posts have notable properties not found on JSON posts:
   - Integer
 - **`preview_height`**: The height of the preview image in pixels
   - Integer
+
 - **`creator_id`**: The ID of the creator of the post
   - Integer
 - **`has_children`**: Whether one or more posts have the post set as their
@@ -262,6 +267,7 @@ XML posts have notable properties not found on JSON posts:
 - **`created_at`**: The date of the post's creation
   - [`Date`]-parsable: `"Ddd Mon DD HH:MM:SS +0100 YYYY"` (`+0100` being a fixed
     timezone)
+
 - **`has_comments`**: Whether this post has one or more comments
   - Boolean
 
@@ -272,11 +278,13 @@ Likewise, JSON posts have noteworthy, exclusive properties:
 - **`sample`**: Whether the main file is an image, and whether there is a
   resample for it
   - Boolean
-- **`owner`**: The username of the creator of the post
-- **`directory`**: The numerical directory of the post's files
-  - Integer
 - **`image`**: The main file's filename; equivalent to `hash` plus the file
   extension
+- **`directory`**: The numerical directory of the post's files
+  - Integer
+
+- **`owner`**: The username of the creator of the post
+
 - **`comment_count`**: The amount of comments under the post
   - Integer
 
@@ -294,36 +302,36 @@ revealed.
 
 ### Property Comparison Table
 
-|                  | XML                                    | JSON                                    |
-| ---------------- | -------------------------------------- | --------------------------------------- |
-| Root attributes  | :white_check_mark: `count`, `offset`   | :x: Literal array                       |
-| `file_url`       | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `width`          | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `height`         | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `sample`         | :x: No                                 | :white_check_mark: Yes                  |
-| `sample_url`     | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `sample_width`   | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `sample_height`  | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `preview_url`    | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `preview_width`  | :white_check_mark: Yes                 | :x: No                                  |
-| `preview_height` | :white_check_mark: Yes                 | :x: No                                  |
-| `id`             | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `owner`          | :x: No                                 | :white_check_mark: Yes                  |
-| `creator_id`     | :white_check_mark: Yes                 | :x: No                                  |
-| `parent_id`      | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `has_children`   | :white_check_mark: Yes                 | :x: No                                  |
-| `has_notes`      | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `rating`         | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `tags`           | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `source`         | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `created_at`     | :white_check_mark: Yes                 | :x: No                                  |
-| `change`         | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `md5` / `hash`   | :white_check_mark: Yes (under `"md5"`) | :white_check_mark: Yes (under `"hash"`) |
-| `directory`      | :x: No                                 | :white_check_mark: Yes                  |
-| `image`          | :x: No                                 | :white_check_mark: Yes                  |
-| `status`         | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `score`          | :white_check_mark: Yes                 | :white_check_mark: Yes                  |
-| `has_comments`   | :white_check_mark: Yes                 | :x: No                                  |
-| `comment_count`  | :x: No                                 | :white_check_mark: Yes                  |
+|                  | XML                                  | JSON                              |
+| ---------------- | ------------------------------------ | --------------------------------- |
+| Root attributes  | :white_check_mark: `count`, `offset` | :x: Literal array                 |
+| `file_url`       | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `width`          | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `height`         | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `sample`         | :x: No                               | :white_check_mark: Yes            |
+| `sample_url`     | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `sample_width`   | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `sample_height`  | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `preview_url`    | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `preview_width`  | :white_check_mark: Yes               | :x: No                            |
+| `preview_height` | :white_check_mark: Yes               | :x: No                            |
+| `id`             | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `owner`          | :x: No                               | :white_check_mark: Yes            |
+| `creator_id`     | :white_check_mark: Yes               | :x: No                            |
+| `parent_id`      | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `has_children`   | :white_check_mark: Yes               | :x: No                            |
+| `has_notes`      | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `rating`         | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `tags`           | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `source`         | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `created_at`     | :white_check_mark: Yes               | :x: No                            |
+| `change`         | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `md5` / `hash`   | :white_check_mark: Under `"md5"`     | :white_check_mark: Under `"hash"` |
+| `directory`      | :x: No                               | :white_check_mark: Yes            |
+| `image`          | :x: No                               | :white_check_mark: Yes            |
+| `status`         | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `score`          | :white_check_mark: Yes               | :white_check_mark: Yes            |
+| `has_comments`   | :white_check_mark: Yes               | :x: No                            |
+| `comment_count`  | :x: No                               | :white_check_mark: Yes            |
 
 [^1]: The example is formatted for legibility. The actual result should differ.
