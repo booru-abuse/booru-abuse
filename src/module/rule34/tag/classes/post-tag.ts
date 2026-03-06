@@ -1,7 +1,7 @@
 import { TagType } from "../enums/tag-type.ts";
 import { overlayKeys } from "../../../../util/object/functions/overlay-keys.ts";
 import type { BaseTag } from "../interfaces/base-tag.ts";
-import type { RawPostJSON } from "../../api/raw/interface/raw-posts-json.ts";
+import type { RawPostJson } from "../../api/raw/interface/raw-posts-json.ts";
 
 /** A tag attributed to  a post. */
 export class PostTag<T extends TagType = TagType>
@@ -19,7 +19,7 @@ implements Pick<BaseTag<T>, "name" | "count" | "type"> {
         [null as any as "null"]: "Ambiguous"
     } satisfies {
         [K in Exclude<
-            RawPostJSON<true>["tag_info"][number]["type"],
+            RawPostJson<true>["tag_info"][number]["type"],
             null
         > | "null"]:
             keyof typeof TagType;
@@ -33,7 +33,7 @@ implements Pick<BaseTag<T>, "name" | "count" | "type"> {
         overlayKeys(this, object);
     }
 
-    static fromRaw(raw: RawPostJSON<true>["tag_info"][number]) {
+    static fromRaw(raw: RawPostJson<true>["tag_info"][number]) {
         return new this({
             name: raw.tag,
             count: raw.count,

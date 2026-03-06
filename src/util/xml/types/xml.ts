@@ -1,10 +1,10 @@
-import type { parseXML } from "../functions/parse-xml.ts";
+import type { parseXml } from "../functions/parse-xml.ts";
 
-export type XMLDocument = ReturnType<typeof parseXML>;
-export type XMLNode = XMLDocument | XMLDocument["children"][number];
+export type XmlDocument = ReturnType<typeof parseXml>;
+export type XmlNode = XmlDocument | XmlDocument["children"][number];
 
-export interface XMLObject {
+export interface XmlObject {
     name: string;
     attr: { [key: string]: string | undefined; };
-    children: XMLObject[]
+    children: XmlObject[]
 }

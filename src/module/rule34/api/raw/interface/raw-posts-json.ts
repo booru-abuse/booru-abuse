@@ -36,7 +36,7 @@ interface TagInfo {
     }[];
 }
 
-export type RawPostJSON<T extends boolean | unknown = unknown> = RawPost & (
+export type RawPostJson<T extends boolean | unknown = unknown> = RawPost & (
     T extends true
         ? TagInfo
         : T extends false
@@ -44,4 +44,4 @@ export type RawPostJSON<T extends boolean | unknown = unknown> = RawPost & (
             : Partial<TagInfo>
 );
 
-export type RawPostsJSON = RawPostJSON[];
+export type RawPostsJson = RawPostJson[];

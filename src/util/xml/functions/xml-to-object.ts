@@ -1,10 +1,10 @@
-import type { XMLNode, XMLObject } from "../types/xml.ts";
+import type { XmlNode, XmlObject } from "../types/xml.ts";
 
-export let xmlToObject = (xml: XMLNode) => {
+export let xmlToObject = (xml: XmlNode) => {
     return convert(xml);
 
-    function convert(node: XMLNode) {
-        const object: XMLObject = {
+    function convert(node: XmlNode) {
+        const object: XmlObject = {
             name: node.nodeName,
             attr: {},
             children: []

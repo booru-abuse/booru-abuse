@@ -4,8 +4,8 @@ import { PostRating } from "../enums/post-rating.ts";
 import { PostStatus } from "../enums/post-status.ts";
 import { PostTags } from "../../tag/classes/post-tags.ts";
 import { overlayKeys } from "../../../../util/object/functions/overlay-keys.ts";
-import type { RawPostJSON } from "../../api/raw/interface/raw-posts-json.ts";
-import type { RawPostXML } from "../../api/raw/interface/raw-posts-xml.ts";
+import type { RawPostJson } from "../../api/raw/interface/raw-posts-json.ts";
+import type { RawPostXml } from "../../api/raw/interface/raw-posts-xml.ts";
 import type { Client } from "../../client/classes/client.ts";
 
 /** A post. */
@@ -34,14 +34,14 @@ export class Post {
         "questionable": "Questionable",
         "explicit": "Explicit"
     } satisfies {
-        [K in RawPostJSON["rating"]]: keyof typeof PostRating;
+        [K in RawPostJson["rating"]]: keyof typeof PostRating;
     };
     static RAW_STATUS = {
         "active": "Active",
         "flagged": "Flagged",
         "deleted": "Deleted"
     } satisfies {
-        [K in RawPostJSON["status"]]: keyof typeof PostStatus;
+        [K in RawPostJson["status"]]: keyof typeof PostStatus;
     };
 
     constructor (object: {
@@ -65,7 +65,7 @@ export class Post {
 
     static fromRaw(
         client: Client,
-        { json, xml }: { json: RawPostJSON<true>; xml: RawPostXML["attr"]; }
+        { json, xml }: { json: RawPostJson<true>; xml: RawPostXml["attr"]; }
     ) {
         return new this({
             client: client,

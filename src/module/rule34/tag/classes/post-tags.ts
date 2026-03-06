@@ -1,6 +1,6 @@
 import { PostTag } from "./post-tag.ts";
 import type { TagType } from "../enums/tag-type.ts";
-import type { RawPostJSON } from "../../api/raw/interface/raw-posts-json.ts";
+import type { RawPostJson } from "../../api/raw/interface/raw-posts-json.ts";
 
 /** Array of tags found under a post. */
 export class PostTags extends Array<PostTag> {
@@ -17,7 +17,7 @@ export class PostTags extends Array<PostTag> {
         this.string = object.string;
     }
 
-    static fromRaw(raw: RawPostJSON<true>) {
+    static fromRaw(raw: RawPostJson<true>) {
         return new this({
             string: raw.tags,
             tags: raw.tag_info.map(i => PostTag.fromRaw(i))

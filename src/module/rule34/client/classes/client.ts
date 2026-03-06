@@ -9,8 +9,8 @@ import { resolvePromisesOfObject } from "../../../../util/object/functions/resol
 import { fetchJson, fetchXml } from "../../../../util/rest.ts";
 import type { Authentication } from "../interfaces/authentication.ts";
 import type { ClientOptions } from "../interfaces/client-options.ts";
-import type { RawPostsJSON } from "../../api/raw/interface/raw-posts-json.ts";
-import type { RawPostsXML } from "../../api/raw/interface/raw-posts-xml.ts";
+import type { RawPostsJson } from "../../api/raw/interface/raw-posts-json.ts";
+import type { RawPostsXml } from "../../api/raw/interface/raw-posts-xml.ts";
 
 /** Client to retrieve data from Rule 34 at rule34.xxx. */
 export class Client {
@@ -105,9 +105,9 @@ export class Client {
 
         return await resolvePromisesOfObject({
             // API REQUEST
-            xml: fetchXml(url.xml) as Promise<RawPostsXML>,
+            xml: fetchXml(url.xml) as Promise<RawPostsXml>,
             // API REQUEST
-            json: fetchJson(url.json) as Promise<RawPostsJSON>
+            json: fetchJson(url.json) as Promise<RawPostsJson>
         }).then(response => Posts.fromRaw(this, query, response));
     }
 

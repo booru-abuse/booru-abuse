@@ -1,7 +1,7 @@
 import { DOMParser } from "@xmldom/xmldom";
 
 const parser = new DOMParser();
-export function parseXML(document: string) {
+export function parseXml(document: string) {
     const xml = parser.parseFromString(document).documentElement;
 
     // xmldom has yet to implement the children property

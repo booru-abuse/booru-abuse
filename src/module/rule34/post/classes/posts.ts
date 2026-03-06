@@ -1,8 +1,8 @@
 import { Post } from "./post.ts";
 import { overlayKeys } from "../../../../util/object/functions/overlay-keys.ts";
 import type { Client } from "../../client/classes/client.ts";
-import type { RawPostJSON, RawPostsJSON } from "../../api/raw/interface/raw-posts-json.ts";
-import type { RawPostsXML } from "../../api/raw/interface/raw-posts-xml.ts";
+import type { RawPostJson, RawPostsJson } from "../../api/raw/interface/raw-posts-json.ts";
+import type { RawPostsXml } from "../../api/raw/interface/raw-posts-xml.ts";
 
 /** An array of posts. */
 export class Posts extends Array<Post> {
@@ -24,14 +24,14 @@ export class Posts extends Array<Post> {
     }
 
     static fromRaw(client: Client, query: string, raw: {
-        json: RawPostsJSON;
-        xml: RawPostsXML;
+        json: RawPostsJson;
+        xml: RawPostsXml;
     }) {
         const merged: Post[] = [];
         raw.json.forEach((_, i) => merged.push(Post.fromRaw(
             client,
             {
-                json: raw.json[i] as RawPostJSON<true>,
+                json: raw.json[i] as RawPostJson<true>,
                 xml: raw.xml.children[i]!.attr
             }
         )));

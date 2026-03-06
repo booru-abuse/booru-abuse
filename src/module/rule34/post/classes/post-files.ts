@@ -1,7 +1,7 @@
 import { PostFileType } from "../enums/post-file-type.ts";
 import { overlayKeys } from "../../../../util/object/functions/overlay-keys.ts";
-import type { RawPostJSON } from "../../api/raw/interface/raw-posts-json.ts";
-import type { RawPostXML } from "../../api/raw/interface/raw-posts-xml.ts";
+import type { RawPostJson } from "../../api/raw/interface/raw-posts-json.ts";
+import type { RawPostXml } from "../../api/raw/interface/raw-posts-xml.ts";
 
 /** A set of the files of a post. */
 export class PostFile {
@@ -71,8 +71,8 @@ export class PostFiles extends PostFile {
     }
 
     static fromRaw({ json, xml }: {
-        json: RawPostJSON;
-        xml: RawPostXML["attr"];
+        json: RawPostJson;
+        xml: RawPostXml["attr"];
     }) {
         return new this({
             url: json.file_url,

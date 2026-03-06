@@ -1,7 +1,7 @@
 type NumericString = `${number}`;
 type BooleanString = `${boolean}`;
 
-export interface RawPostsXML {
+export interface RawPostsXml {
     name: "posts";
     attr: {
         count: NumericString;
@@ -43,4 +43,4 @@ export interface RawPostsXML {
     }[];
 }
 
-export type RawPostXML = RawPostsXML["children"][number];
+export type RawPostXml = RawPostsXml["children"][number];
