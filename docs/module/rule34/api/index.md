@@ -21,15 +21,13 @@ https://api.rule34.xxx/?page=dapi&q=index
 > ```plain text
 > https://api.rule34.xxx/index.php?page=dapi&q=index
 > ```
->
-> This is, however, not recommended practice.
 
 An additional parameter `s` should follow describing the type of data being
 retrieved, such as `s=post` or `s=comment`.
 
-The API will not return results without [authentication].
+The API also requires that [two additional authentication parameters] follow.
 
-[authentication]: #authentication
+[two additional authentication parameters]: #authentication
 
 ## Authentication
 
@@ -48,11 +46,16 @@ response:
 ```
 
 > [!NOTE]
-> The preceding example is formatted for better readability, but the actual
-> response is a one-liner; it does not use line breaks.
+> The preceding sample is formatted for better readability, but the actual
+> response is formatted differently.
+
+> [!TIP]
+> The only exception to needing authentication to use the API is with
+> autocomplete results.
 
 Beware that, because of the length of API keys, API URLs tend to look very
-lengthy.
+lengthy. It is recommended practice to use utilities and functions to convert
+objects to URLs.
 
 ## Server
 
