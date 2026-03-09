@@ -111,8 +111,9 @@ clarification[^NC-failed-response]).
 [^NC-default-limit]: It is unknown what the initial API rate limit is.
 
 [^NC-staff-contact]: It is uncertain what circumstances allow for what staff
-  contact methods. It is assumed staff may be contacted for a rate limit
-  increase regardless of urgency.
+  contact methods. It may be assumed staff may be contacted for a rate limit
+  increase via either method regardless of urgency, with a Discord server ticket
+  resulting in a faster response.
 
 [^NC-multiple-keys]: It is unknown whether only one key is allowed _per project_
   or _per person._ It is implicit that only one key may be used per person, but
