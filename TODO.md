@@ -30,8 +30,7 @@
       },
       ```
 
-[Stack Overflow -- How to support es modules and commonjs modules at the same
-time]:
+[Stack Overflow -- How to support es modules and commonjs modules at the same time]:
   <https://stackoverflow.com/questions/74937600/>
 [ESM>CDN: How to Use]:
   <https://esm.sh/#:~:text=define%20the%20exports%20field>
