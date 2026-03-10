@@ -20,11 +20,13 @@ export interface ApiUrlParameterMap {
         params: Authentication & {
             post_id?: number;
         };
+        args: [];
     };
     "tag": {
         params: {
             id?: number;
             limit?: number;
         };
+        args: [];
     };
 }
