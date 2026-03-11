@@ -122,11 +122,8 @@ export class Post {
             }),
 
             created: new Date(xml.created_at),
-            // ERROR
             modified: new Date(json.change * 1000),
-            // ERROR
             status: PostStatus[Post.RAW_STATUS[json.status]],
-            // ERROR
 
             score: json.score,
             tags: PostTags.fromRaw(json)

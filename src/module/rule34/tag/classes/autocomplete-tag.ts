@@ -3,26 +3,23 @@ import type { RawAutocompleteTags } from "../../api/raw/interface/raw-autocomple
 
 /** A tag received from an autocomplete suggestion. */
 export class AutocompleteTag implements Pick<BaseTag, "name" | "count"> {
-    /** The tag's raw JSON object. */
-    protected raw: RawAutocompleteTags[number];
-
     name: string;
     count: number;
 
+    /** Returns whether this tag is legitimate and not malformed or fake. */
     isReal(): boolean {
-        return !AutocompleteTag.RAW_INVALID_REGEX.test(this.raw.value);
+        return !AutocompleteTag.RAW_INVALID_REGEX.test(this.name);
     }
 
     static RAW_INVALID_REGEX = /\\r\\n/;
     static RAW_LABEL_COUNT_REGEX = /(?<=\()\d+(?=\)$)/;
 
-    constructor (
-        object: { name: string; count: number; },
-        raw: RawAutocompleteTags[number]
-    ) {
+    constructor (object: {
+        name: string;
+        count: number;
+    }) {
         this.name = object.name;
         this.count = object.count;
-        this.raw = raw;
     }
 
     static fromRaw(raw: RawAutocompleteTags[number]) {
@@ -31,6 +28,6 @@ export class AutocompleteTag implements Pick<BaseTag, "name" | "count"> {
             count: parseInt(
                 raw.label.match(this.RAW_LABEL_COUNT_REGEX)?.[0] ?? "0"
             )
-        }, raw);
+        });
     }
 }
