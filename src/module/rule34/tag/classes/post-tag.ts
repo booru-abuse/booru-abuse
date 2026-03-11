@@ -41,7 +41,6 @@ implements Pick<BaseTag<T>, "name" | "count" | "type"> {
             type: TagType[this.RAW_TAG_TYPE[
                 raw.type as keyof typeof this.RAW_TAG_TYPE
             ]]
-            // ERROR
         });
     }
 }

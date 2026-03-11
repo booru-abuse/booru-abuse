@@ -114,11 +114,9 @@ export class Post {
             parent: json.parent_id || null,
             source: json.source,
             rating: PostRating[Post.RAW_RATING[json.rating]],
-            // ERROR
             author: new PostAuthor({
                 name: json.owner,
                 id: parseInt(xml.creator_id)
-                // ERROR
             }),
 
             created: new Date(xml.created_at),

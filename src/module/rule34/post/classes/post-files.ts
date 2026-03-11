@@ -81,7 +81,6 @@ export class PostFiles extends PostFile {
                     .includes(this.extension)
             )!
         ];
-        // ERROR
 
         this.directory = object.directory;
         this.hash = object.hash;
