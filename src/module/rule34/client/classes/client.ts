@@ -91,9 +91,10 @@ export class Client {
     async autocomplete(tag: string): Promise<AutocompleteTags> {
         return await fetchJson(this.apiUrl(
             "autocomplete",
-            { q: tag.match(Client.AUTOCOMPLETE_LAST_TAG_REGEX)![0] })
-            // ERROR
-        ).then(raw => AutocompleteTags.fromRaw(raw, tag));
+            {
+                q: tag
+            }
+        )).then(raw => AutocompleteTags.fromRaw(raw, tag));
     }
 
     /**
@@ -103,12 +104,16 @@ export class Client {
         query: string,
         options?: { perPage?: number; page?: number; }
     ): Promise<Search> {
-        const url = this.apiUrl("post", {
-            tags: query,
-            limit: options?.perPage ?? 42,
-            pid: options?.page ?? 0,
-            fields: "tag_info"
-        }, true);
+        const url = this.apiUrl(
+            "post",
+            {
+                tags: query,
+                limit: options?.perPage ?? 42,
+                pid: options?.page ?? 0,
+                fields: "tag_info"
+            },
+            true
+        );
 
         return await resolvePromisesOfObject({
             // API REQUEST
@@ -135,8 +140,9 @@ export class Client {
      */
     async getComments(id?: number): Promise<Comments> {
         // API REQUEST
-        return await fetchXml(this.apiUrl("comment", {
-            post_id: id
-        })).then(i => Comments.fromRaw(i as any as RawComments));
+        return await fetchXml(this.apiUrl(
+            "comment",
+            id ? { post_id: id } : {}
+        )).then(i => Comments.fromRaw(i as any as RawComments));
     }
 }
