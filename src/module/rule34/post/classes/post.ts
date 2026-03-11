@@ -10,9 +10,12 @@ import type { Client } from "../../client/classes/client.ts";
 
 /** A post. */
 export class Post {
+    /** The client used to fetch this post. */
     protected client: Client;
+    /** Whether this post claims to have children. */
     protected hasChildren: boolean;
-    protected commentCount: boolean;
+    /** The amount of comments under this post. */
+    protected commentCount: number;
 
     /** The CDN media files of this post. */
     file: PostFiles;

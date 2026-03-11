@@ -8,8 +8,8 @@ export class Comments extends Array<Comment> {
     /**
      * The post this list of comments are found under.
      * 
-     * If not present, the comments are listed in most-recent order regardless
-     * of what post each one is under, i.e. from all posts on the site.
+     * If not present, the comments are listed in most-recent order from all
+     * posts on the site.
      */
     postId?: number;
 

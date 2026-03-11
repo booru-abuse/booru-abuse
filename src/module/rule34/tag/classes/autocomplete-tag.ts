@@ -3,6 +3,7 @@ import type { RawAutocompleteTags } from "../../api/raw/interface/raw-autocomple
 
 /** A tag received from an autocomplete suggestion. */
 export class AutocompleteTag implements Pick<BaseTag, "name" | "count"> {
+    /** The tag's raw JSON object. */
     protected raw: RawAutocompleteTags[number];
 
     name: string;

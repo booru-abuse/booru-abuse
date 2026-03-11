@@ -4,8 +4,10 @@ import type { RawPostJson } from "../../api/raw/interface/raw-posts-json.ts";
 
 /** Array of tags found under a post. */
 export class PostTags extends Array<PostTag> {
+    /** The raw string of tags. */
     protected string: string;
     
+    /** Returns an array of the tags that match the given type. */
     ofCategory<T extends TagType>(category: T): PostTag<T>[] {
         return Array.from(this).filter(tag => tag.type === category) as PostTag<T>[];
     }
