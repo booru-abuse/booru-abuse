@@ -20,7 +20,7 @@ export class AutocompleteTag implements Pick<BaseTag, "name" | "count"> {
         return new this({
             name: raw.value,
             count: parseInt(
-                raw.label.match(this.RAW_LABEL_COUNT_REGEX)?.[0] ?? "0"
+                raw.label.match(this.RAW_COUNT_REGEX)?.[0] ?? "0"
             )
         });
     }

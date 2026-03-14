@@ -19,9 +19,6 @@ export class PostTags extends Array<PostTag> {
     }
 
     static fromRaw(raw: RawPostJson<true>) {
-        return new this({
-            string: raw.tags,
-            tags: raw.tag_info.map(i => PostTag.fromRaw(i))
-        });
+        return new this(raw.tag_info.map(i => PostTag.fromRaw(i)));
     }
 }
